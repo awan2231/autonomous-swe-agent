@@ -13,11 +13,20 @@ def load_py_files(repo_path: Path) -> dict[str, str]:
 
 
 def fetch_issue_node(state: AgentState) -> dict:
+    # Evaluation mode: issue and repo are already supplied locally
+    if state.get("issue") and state.get("repo_path"):
+        print(f"Using local issue: {state['issue'].title}")
+        return {"attempts": 0, "last_error": ""}
+
     issue = GitHubClient().get_issue(state["repo_name"], state["issue_number"])
     repo_path = clone_repo(issue.clone_url, state["repo_name"].split("/")[1])
     print(f"Fetched issue #{issue.number}: {issue.title}")
-    return {"issue": issue, "repo_path": str(repo_path), "attempts": 0, "last_error": ""}
-
+    return {
+        "issue": issue,
+        "repo_path": str(repo_path),
+        "attempts": 0,
+        "last_error": "",
+    }
 
 def run_tests_node(state: AgentState) -> dict:
     repo_path = Path(state["repo_path"])

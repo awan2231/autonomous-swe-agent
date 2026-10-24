@@ -1,0 +1,42 @@
+[
+  {
+    "case": "fizzbuzz",
+    "passed": true,
+    "attempts": 1,
+    "seconds": 49.8,
+    "tests_modified": false,
+    "error": ""
+  },
+  {
+    "case": "max_value",
+    "passed": true,
+    "attempts": 1,
+    "seconds": 54.6,
+    "tests_modified": false,
+    "error": ""
+  },
+  {
+    "case": "palindrome",
+    "passed": true,
+    "attempts": 1,
+    "seconds": 45.4,
+    "tests_modified": false,
+    "error": ""
+  },
+  {
+    "case": "sum_to_n",
+    "passed": true,
+    "attempts": 1,
+    "seconds": 17.5,
+    "tests_modified": false,
+    "error": ""
+  },
+  {
+    "case": "word_count",
+    "passed": true,
+    "attempts": 1,
+    "seconds": 34.6,
+    "tests_modified": false,
+    "error": ""
+  }
+]
