@@ -49,7 +49,7 @@ You need Python 3.11 or newer, Docker Desktop, a Google Gemini API key, and a Gi
 
 ```bash
 git clone https://github.com/awan2231/autonomous-swe-agent.git
-cd autonomous-ai-software-engineer
+cd autonomous-swe-agent
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
