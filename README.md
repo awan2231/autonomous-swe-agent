@@ -48,7 +48,7 @@ evaluation/                 # benchmark cases and evaluation harness
 You need Python 3.11 or newer, Docker Desktop, a Google Gemini API key, and a GitHub token.
 
 ```bash
-git clone https://github.com/awan2231/autonomous-ai-software-engineer.git
+git clone https://github.com/awan2231/autonomous-swe-agent.git
 cd autonomous-ai-software-engineer
 python3 -m venv .venv
 source .venv/bin/activate
