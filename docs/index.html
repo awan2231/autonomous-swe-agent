@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Autonomous AI Software Engineer</title>
+<meta name="description" content="An AI agent that reads a GitHub issue, fixes the code, proves the fix with tests in Docker, and opens a pull request.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500;6..72,700&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F4F6F9; --ink:#14213D; --muted:#55627A; --line:#D5DBE5;
+  --signal:#2F5BEA; --pass:#1F9D55; --fail:#D64545; --term:#101827;
+  --serif:"Newsreader",Georgia,serif; --sans:"IBM Plex Sans",system-ui,sans-serif; --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+*{box-sizing:border-box}
+html{color-scheme:light}
+body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.65 var(--sans)}
+a{color:var(--signal)}
+a:focus-visible,button:focus-visible{outline:3px solid var(--signal);outline-offset:3px}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+header{display:flex;justify-content:space-between;align-items:center;padding:22px 0;border-bottom:1px solid var(--line)}
+header strong{font-family:var(--serif);font-size:19px}
+header a{font-weight:500;text-decoration:none}
+.hero{display:grid;grid-template-columns:1fr 1.15fr;gap:48px;align-items:center;padding:64px 0 72px}
+h1{font-family:var(--serif);font-weight:700;font-size:clamp(36px,5vw,56px);line-height:1.08;margin:0 0 20px;letter-spacing:-.01em}
+.lede{color:var(--muted);max-width:46ch;margin:0 0 28px}
+.btns{display:flex;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;padding:11px 20px;border-radius:6px;font-weight:500;text-decoration:none;border:1px solid var(--ink)}
+.btn.primary{background:var(--ink);color:#fff}
+.btn.ghost{color:var(--ink)}
+.term{background:var(--term);border-radius:10px;overflow:hidden;box-shadow:0 18px 40px -22px rgba(20,33,61,.6)}
+.term-bar{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:#1B2638;color:#9FB0CC;font:13px var(--mono)}
+.term-bar button{background:none;border:1px solid #3A4A66;color:#C9D6EE;font:13px var(--mono);padding:3px 10px;border-radius:4px;cursor:pointer}
+.term-bar button:hover{background:#26344D}
+pre{margin:0;padding:18px 16px;min-height:318px;font:13.5px/1.7 var(--mono);color:#D7E0F0;white-space:pre-wrap;word-break:break-word}
+.c{color:#8FA3C7}.f{color:#FF7A7A}.p{color:#5FD08C}.a{color:#7FA4FF}.rm{color:#FF7A7A}.ad{color:#5FD08C}
+section{padding:56px 0;border-top:1px solid var(--line)}
+h2{font-family:var(--serif);font-size:32px;line-height:1.2;margin:0 0 8px}
+.sub{color:var(--muted);margin:0 0 32px;max-width:60ch}
+ol.steps{list-style:none;margin:0;padding:0;display:grid;gap:0;max-width:760px}
+ol.steps li{display:grid;grid-template-columns:44px 1fr;gap:16px;padding:16px 0;border-bottom:1px solid var(--line)}
+ol.steps li:last-child{border-bottom:0}
+.n{font:500 15px var(--mono);color:var(--signal);padding-top:2px}
+ol.steps b{display:block;font-weight:500}
+ol.steps span{color:var(--muted)}
+.loop{margin-top:18px;max-width:760px;padding:14px 16px;border-left:3px solid var(--signal);background:#fff;color:var(--muted)}
+table{border-collapse:collapse;width:100%;max-width:760px;background:#fff;border:1px solid var(--line)}
+th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--line)}
+th{font-weight:500;color:var(--muted);background:#EEF1F6}
+td.ok{color:var(--pass);font-weight:500}
+tfoot td{font-weight:500;background:#EEF1F6}
+.tablewrap{overflow-x:auto}
+.note{max-width:62ch;color:var(--muted);margin-top:20px}
+dl{display:grid;grid-template-columns:170px 1fr;gap:0;max-width:760px;margin:0}
+dt,dd{margin:0;padding:13px 0;border-bottom:1px solid var(--line)}
+dt{font-weight:500}
+dd{color:var(--muted)}
+ul.lim{max-width:68ch;padding-left:20px;margin:0}
+ul.lim li{margin-bottom:10px}
+footer{border-top:1px solid var(--line);padding:32px 0 48px;color:var(--muted)}
+footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+@media (max-width:820px){
+  .hero{grid-template-columns:1fr;padding:44px 0 52px;gap:36px}
+  dl{grid-template-columns:1fr}
+  dt{border-bottom:0;padding-bottom:0}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <strong>Autonomous AI Software Engineer</strong>
+    <a href="https://github.com/awan2231/autonomous-ai-software-engineer">View on GitHub</a>
+  </header>
+
+  <div class="hero">
+    <div>
+      <h1>An agent that fixes the bug, then proves it with tests.</h1>
+      <p class="lede">Give it a GitHub repo and an issue number. It reads the issue, explores the code, edits the files, and runs the tests in a Docker sandbox. If they fail, it reads the error and tries again. When they pass, it opens a pull request.</p>
+      <div class="btns">
+        <a class="btn primary" href="https://github.com/awan2231/autonomous-ai-software-engineer">Read the code</a>
+        <a class="btn ghost" href="https://github.com/awan2231/demo-buggy-repo">See the demo repo</a>
+      </div>
+    </div>
+    <div class="term" aria-label="Replay of the agent fixing a bug">
+      <div class="term-bar"><span>agent run on demo-buggy-repo</span><button id="replay" type="button">Replay</button></div>
+      <pre id="screen" aria-live="off"></pre>
+    </div>
+  </div>
+
+  <section>
+    <h2>How one run works</h2>
+    <p class="sub">Each step is a node in a LangGraph workflow that shares one state.</p>
+    <ol class="steps">
+      <li><span class="n">1</span><div><b>Fetch the issue</b><span>Read the title, body, and comments through the GitHub API, then clone the repository.</span></div></li>
+      <li><span class="n">2</span><div><b>Run the tests</b><span>pytest runs inside a Docker container with no network access and a 512 MB memory limit.</span></div></li>
+      <li><span class="n">3</span><div><b>Propose a fix</b><span>Gemini sees the issue, the source files, and the test output, and returns exact edits: file, old text, new text.</span></div></li>
+      <li><span class="n">4</span><div><b>Apply the edits</b><span>An edit is applied only if the old text appears exactly once. Otherwise it is rejected and the error goes back to the model.</span></div></li>
+      <li><span class="n">5</span><div><b>Check again</b><span>The tests run again. Passing ends the run; failing sends the new output back to step 3.</span></div></li>
+      <li><span class="n">6</span><div><b>Open a pull request</b><span>The agent creates a branch, commits the change, and opens a PR that references the issue.</span></div></li>
+    </ol>
+    <p class="loop">Steps 3 to 5 repeat up to a set number of attempts. The Python <code>ast</code> module also lets the agent outline every function and class in a file, with line numbers, without reading the whole file.</p>
+  </section>
+
+  <section>
+    <h2>Evaluation</h2>
+    <p class="sub">Five small buggy Python projects, each with an issue and a test suite.</p>
+    <div class="tablewrap">
+    <table>
+      <thead><tr><th>Case</th><th>Result</th><th>Attempts</th></tr></thead>
+      <tbody>
+        <tr><td>sum_to_n</td><td class="ok">Solved</td><td>1</td></tr>
+        <tr><td>palindrome</td><td class="ok">Solved</td><td>1</td></tr>
+        <tr><td>fizzbuzz</td><td class="ok">Solved</td><td>1</td></tr>
+        <tr><td>max_value</td><td class="ok">Solved</td><td>1</td></tr>
+        <tr><td>word_count</td><td class="ok">Solved</td><td>1</td></tr>
+      </tbody>
+      <tfoot><tr><td>Success rate</td><td>5 of 5</td><td>1.0 average</td></tr></tfoot>
+    </table>
+    </div>
+    <p class="note">The harness fails a case if the agent edits the test files, because rewriting a test is not a fix. These are small, single-file bugs, so treat this as a sanity check, not a measure of performance on large real-world repositories.</p>
+  </section>
+
+  <section>
+    <h2>Built with</h2>
+    <p class="sub">&nbsp;</p>
+    <dl>
+      <dt>LangGraph</dt><dd>The workflow and the retry loop.</dd>
+      <dt>Google Gemini</dt><dd>Proposes fixes as structured edits.</dd>
+      <dt>Python AST</dt><dd>Outlines functions and classes with line numbers.</dd>
+      <dt>Docker</dt><dd>Runs tests in an isolated sandbox.</dd>
+      <dt>GitHub API</dt><dd>Reads issues and opens pull requests.</dd>
+    </dl>
+  </section>
+
+  <section>
+    <h2>What it can’t do yet</h2>
+    <p class="sub">The limits I know about, and what I plan to fix first.</p>
+    <ul class="lim">
+      <li>It supports only Python projects that use pytest.</li>
+      <li>It sends whole source files to the model, so large repositories need smarter file selection. Using the AST outline to pick files is the next step.</li>
+      <li>Fixes are verified only by the existing tests, so a weak test suite can let a wrong fix through.</li>
+      <li>It can clone only public repositories.</li>
+    </ul>
+  </section>
+</div>
+
+<footer>
+  <div class="wrap">
+    <span>Built by <a href="https://github.com/awan2231">awan2231</a></span>
+    <a href="https://github.com/awan2231/autonomous-ai-software-engineer">Source code on GitHub</a>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var screen=document.getElementById('screen');
+  var lines=[
+    ['<span class="a">$</span> python3 -m agent.main awan2231/demo-buggy-repo 1 --pr',500],
+    ['Fetched issue #1: divide() returns wrong result',600],
+    ['Tests: <span class="f">FAILED</span>',700],
+    ['<span class="c">  FAILED test_calculator.py::test_divide - assert 20 == 5</span>',500],
+    ['',200],
+    ['Attempt 1/3: asking the LLM for a fix...',900],
+    ['Edited calculator.py',600],
+    ['Tests: <span class="p">PASSED</span>',700],
+    ['<span class="p">FIXED in 1 attempt(s)</span>',500],
+    ['',200],
+    ['<span class="c">def divide(a, b):</span>',150],
+    ['<span class="rm">-    return a * b</span>',150],
+    ['<span class="ad">+    return a / b</span>',500],
+    ['',200],
+    ['Pull request opened on GitHub',0]
+  ];
+  var timers=[];
+  var still=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function clear(){timers.forEach(clearTimeout);timers=[];screen.innerHTML='';}
+  function play(){
+    clear();
+    if(still){screen.innerHTML=lines.map(function(l){return l[0]}).join('\n');return;}
+    var t=0;
+    lines.forEach(function(l,i){
+      timers.push(setTimeout(function(){screen.innerHTML+=(i?'\n':'')+l[0];},t));
+      t+=l[1];
+    });
+  }
+  document.getElementById('replay').addEventListener('click',play);
+  play();
+})();
+</script>
+</body>
+</html>
